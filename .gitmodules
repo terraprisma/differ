@@ -1,0 +1,3 @@
+[submodule "src/DepotDownloader"]
+	path = src/DepotDownloader
+	url = https://github.com/terraprisma/DepotDownloader
