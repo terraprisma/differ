@@ -63,7 +63,7 @@ public sealed class PatchSet {
         }
 
         foreach (var nodeMeta in meta.Nodes) {
-            var node = DiffNode.FromMeta(nodeMeta);
+            var node = DiffNode.FromMeta(nodeMeta, rootDir);
             patchSet.Nodes.Add(node);
 
             if (node.Parent is not null || node.MetaNode.Parent is null)

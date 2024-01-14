@@ -24,22 +24,7 @@ public abstract class DiffNode {
         MetaNode = metaNode;
     }
 
-    public static DiffNode FromFile(string path) {
-        if (!File.Exists(path))
-            throw new FileNotFoundException("The specified file does not exist.", path);
-
-        return FromJson(File.ReadAllText(path));
-    }
-
-    public static DiffNode FromJson(string json) {
-        var meta = JsonConvert.DeserializeObject<MetaNode>(json);
-        if (meta is null)
-            throw new JsonException("The specified JSON is invalid.");
-
-        return FromMeta(meta);
-    }
-
-    public static DiffNode FromMeta(MetaNode meta) {
+    public static DiffNode FromMeta(MetaNode meta, string rootDir) {
         DiffNode node = meta.Kind switch {
             KIND_DEPOT => new DepotNode(meta),
             KIND_MOD => new ModNode(meta),
@@ -47,10 +32,13 @@ public abstract class DiffNode {
         };
 
         foreach (var childMeta in meta.Children) {
-            var childNode = FromMeta(childMeta);
+            var childNode = FromMeta(childMeta, rootDir);
             node.Children.Add(childNode);
             childNode.Parent = node;
         }
+
+        if (!Path.IsPathFullyQualified(meta.PatchDir))
+            meta.PatchDir = Path.Combine(rootDir, meta.PatchDir);
 
         return node;
     }

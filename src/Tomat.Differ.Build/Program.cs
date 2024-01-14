@@ -31,34 +31,37 @@ switch (task) {
 
     // Decompiles all depots.
     case decompile_depots:
-        differ.DecompileDepots();
+        differ.DecompileDepots(differ.GetNodesOfType<DepotNode>());
         break;
 
     // Diffs all depots.
     case diff_all_depots:
+        differ.DiffNodes(differ.GetNodesOfType<DepotNode>());
         break;
 
     // Diffs all mods.
     case diff_all_mods:
+        differ.DiffNodes(differ.GetNodesOfType<ModNode>());
         break;
 
     // Diffs a single workspace.
     case diff_patch:
+        differ.DiffNodes(differ.GetNodeWithName(selectNode()));
         break;
 
     // Applies patches to all mods.
     case patch_all_mods:
+        differ.PatchNodes(differ.GetNodesOfType<ModNode>());
         break;
 
     // Applies patches to a single workspace.
     case patch_patch:
+        differ.PatchNodes(differ.GetNodeWithName(selectNode()));
         break;
 
     default:
         throw new Exception("No task selected");
 }
-
-// differ.Run();
 
 return;
 

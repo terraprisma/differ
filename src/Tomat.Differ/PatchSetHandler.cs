@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp.OutputVisitor;
 using Tomat.Differ.DotnetPatcher.Decompile;
+using Tomat.Differ.DotnetPatcher.Patch;
 using Tomat.Differ.Nodes;
 using Tomat.Differ.Transformation;
 using Tomat.Differ.Transformation.Transformers;
 
-[assembly: InternalsVisibleTo("Tomat.Differ.Build")]
-
 namespace Tomat.Differ;
 
 public sealed class PatchSetHandler {
+    private const string downloads_dir = "downloads";
     private const string decompilation_dir = "decompiled";
-    private const string patches_dir = "patches";
     private const string cloned_dir = "cloned";
     private static readonly string[] decompiled_libraries = { "ReLogic", "RailSDK.Net", "SteelSeriesEngineWrapper" };
 
@@ -43,8 +41,16 @@ public sealed class PatchSetHandler {
         }
     }
 
-    public void DecompileDepots() {
-        foreach (var node in GetNodesOfType<DepotNode>()) {
+    public IEnumerable<DiffNode> GetNodeWithName(string name) {
+        return GetAllNodes().Where(node => node.Name == name);
+    }
+
+    public IEnumerable<T> GetNodesOfType<T>() where T : DiffNode {
+        return GetAllNodes().OfType<T>();
+    }
+
+    public void DecompileDepots(IEnumerable<DepotNode> nodes) {
+        foreach (var node in nodes) {
             var dir = Path.Combine(decompilation_dir, node.Name);
             Console.WriteLine($"Decompiling {node.Name}");
             Console.WriteLine("Transforming assemblies");
@@ -54,7 +60,7 @@ public sealed class PatchSetHandler {
 
             Directory.CreateDirectory(dir);
 
-            var depotDir = Path.Combine("downloads", node.AppId.ToString(), node.DepotId.ToString());
+            var depotDir = Path.Combine(downloads_dir, node.AppId.ToString(), node.DepotId.ToString());
             if (!Directory.Exists(depotDir))
                 throw new Exception($"Depot {node.Name} was not downloaded!");
 
@@ -82,112 +88,53 @@ public sealed class PatchSetHandler {
         }
     }
 
-    public IEnumerable<DiffNode> GetNodeWithName(string name) {
-        return GetAllNodes().Where(node => node.Name == name);
+    public void DiffNodes(IEnumerable<DiffNode> nodes) {
+        foreach (var node in nodes) {
+            var parent = node.Parent;
+
+            // If there is no parent node to diff against, create an empty
+            // directory for this node and continue, since there's nothing to
+            // diff against.
+            if (parent is null) {
+                Directory.CreateDirectory(node.PatchDir);
+                continue;
+            }
+
+            Console.WriteLine($"Diffing {node.Name}");
+
+            if (Directory.Exists(node.PatchDir))
+                Directory.Delete(node.PatchDir, true);
+
+            Directory.CreateDirectory(node.PatchDir);
+
+            var differ = new DotnetPatcher.Diff.Differ(Path.Combine(decompilation_dir, parent.Name), node.PatchDir, Path.Combine(decompilation_dir, node.Name));
+            differ.Diff();
+        }
     }
 
-    public IEnumerable<T> GetNodesOfType<T>() where T : DiffNode {
-        return GetAllNodes().OfType<T>();
-    }
+    public void PatchNodes(IEnumerable<DiffNode> nodes) {
+        foreach (var node in nodes) {
+            var parent = node.Parent;
 
-    private void DecompileAndDiffDepotNodes(DiffNode node, DiffNode? parent = null) {
-        //foreach (var child in node.Children)
-        //    DecompileAndDiffDepotNodes(child, node);
-        //
-        //if (parent is null) {
-        //    // Create an empty patches directory for the root node.
-        //    Directory.CreateDirectory(Path.Combine(patches_dir, node.WorkspaceName));
-        //    return;
-        //}
-        //
-        //if (Environment.GetEnvironmentVariable("SKIP_DIFFING") == "1")
-        //    return;
-        //
-        //Console.WriteLine($"Diffing {node.WorkspaceName}...");
-        //
-        //var patchDirName = Path.Combine(patches_dir, node.WorkspaceName);
-        //if (Directory.Exists(patchDirName))
-        //    Directory.Delete(patchDirName, true);
-        //
-        //Directory.CreateDirectory(patchDirName);
-        //
-        //var differ = new DotnetPatcher.Diff.Differ(Path.Combine(decompilation_dir, parent.WorkspaceName), patchDirName, dirName);
-        //differ.Diff();
-    }
+            // If there is no parent node to patch against, create an empty
+            // directory for this node and continue, since there's nothing to
+            // patch against.
+            if (parent is null) {
+                Directory.CreateDirectory(Path.Combine(decompilation_dir, node.Name));
+                continue;
+            }
 
-    private void DiffModNodes(DiffNode node, DiffNode? parent = null) {
-        // if (Environment.GetEnvironmentVariable("ONLY_NODE") is { } onlyNode && node.WorkspaceName != onlyNode) {
-        //     Console.WriteLine($"Skipping {node.WorkspaceName} since it isn't the expected node ({onlyNode})...");
-        //     foreach (var child in node.Children)
-        //         DiffModNodes(child, node);
-        // 
-        //     return;
-        // }
-        // 
-        // if (node is not ModDiffNode modNode) {
-        //     Console.WriteLine($"Skipping {node.WorkspaceName} since it isn't a mod node...");
-        //     foreach (var child in node.Children)
-        //         DiffModNodes(child, node);
-        // 
-        //     return;
-        // }
-        // 
-        // if (parent is null) {
-        //     Console.WriteLine($"Skipping {node.WorkspaceName} since it is a root node...");
-        //     return;
-        // }
-        // 
-        // Console.WriteLine($"Diffing {node.WorkspaceName}...");
-        // 
-        // var patchDirName = Path.Combine("patches", node.WorkspaceName);
-        // if (Directory.Exists(patchDirName))
-        //     Directory.Delete(patchDirName, true);
-        // 
-        // Directory.CreateDirectory(patchDirName);
-        // 
-        // var differ = new DotnetPatcher.Diff.Differ(Path.Combine("decompiled", parent.WorkspaceName), patchDirName, Path.Combine("decompiled", node.WorkspaceName));
-        // differ.Diff();
-        // 
-        // foreach (var child in node.Children)
-        //     DiffModNodes(child, node);
-    }
+            Console.WriteLine($"Patching {node.Name}");
 
-    private void PatchModNodes(DiffNode node, DiffNode? parent = null) {
-        // if (Environment.GetEnvironmentVariable("ONLY_NODE") is { } onlyNode && node.WorkspaceName != onlyNode) {
-        //     Console.WriteLine($"Skipping {node.WorkspaceName} since it isn't the expected node ({onlyNode})...");
-        //     foreach (var child in node.Children)
-        //         PatchModNodes(child, node);
-        // 
-        //     return;
-        // }
-        // 
-        // if (node is not ModDiffNode /*modNode*/) {
-        //     Console.WriteLine($"Skipping {node.WorkspaceName} since it isn't a mod node...");
-        //     foreach (var child in node.Children)
-        //         PatchModNodes(child, node);
-        // 
-        //     return;
-        // }
-        // 
-        // if (parent is null) {
-        //     Console.WriteLine($"Skipping {node.WorkspaceName} since it is a root node...");
-        //     return;
-        // }
-        // 
-        // Console.WriteLine($"Patching {node.WorkspaceName}...");
-        // 
-        // var patchDirName = Path.Combine("patches", node.WorkspaceName);
-        // if (!Directory.Exists(patchDirName))
-        //     Directory.CreateDirectory(patchDirName);
-        // 
-        // if (Directory.Exists(Path.Combine("decompiled", node.WorkspaceName)))
-        //     Directory.Delete(Path.Combine("decompiled", node.WorkspaceName), true);
-        // 
-        // var patcher = new Patcher(Path.Combine("decompiled", parent.WorkspaceName), Path.Combine("patches", node.WorkspaceName), Path.Combine("decompiled", node.WorkspaceName));
-        // patcher.Patch();
-        // 
-        // foreach (var child in node.Children)
-        //     PatchModNodes(child, node);
+            if (!Directory.Exists(node.PatchDir))
+                Directory.CreateDirectory(node.PatchDir);
+
+            if (Directory.Exists(Path.Combine(decompilation_dir, node.Name)))
+                Directory.Delete(Path.Combine(decompilation_dir, node.Name), true);
+
+            var patcher = new Patcher(Path.Combine(decompilation_dir, parent.Name), node.PatchDir, Path.Combine(decompilation_dir, node.Name));
+            patcher.Patch();
+        }
     }
 
     private static void CopyRecursively(string fromDir, string toDir) {
@@ -199,7 +146,7 @@ public sealed class PatchSetHandler {
     }
 
     private static void DownloadManifest(string username, string password, int appId, int depotId) {
-        var dir = Path.Combine("downloads", appId.ToString(), depotId.ToString());
+        var dir = Path.Combine(downloads_dir, appId.ToString(), depotId.ToString());
 
         if (Directory.Exists(dir))
             Directory.Delete(dir, true);
