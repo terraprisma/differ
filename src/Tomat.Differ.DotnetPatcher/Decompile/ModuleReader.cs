@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Reflection.PortableExecutable;
 using ICSharpCode.Decompiler.Metadata;
 
-namespace DotnetPatcher {
+namespace Tomat.Differ.DotnetPatcher.Decompile {
     public class ModuleReader {
         public static PEFile ReadModule(string path, bool createBackup) {
             if (!File.Exists(path)) {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public class Patcher {
         public enum Mode {
             EXACT,

@@ -12,7 +12,7 @@ using ICSharpCode.Decompiler.CSharp.Transforms;
 using ICSharpCode.Decompiler.Metadata;
 using ICSharpCode.Decompiler.TypeSystem;
 
-namespace DotnetPatcher.Utility {
+namespace Tomat.Differ.DotnetPatcher.Utility {
     public class DecompilerUtility {
         public class ExtendedProjectDecompiler : WholeProjectDecompiler {
             public ExtendedProjectDecompiler(IAssemblyResolver assemblyResolver) : base(assemblyResolver) { }

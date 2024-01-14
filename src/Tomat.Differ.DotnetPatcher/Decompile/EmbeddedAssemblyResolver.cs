@@ -5,7 +5,7 @@ using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 using ICSharpCode.Decompiler.Metadata;
 
-namespace DotnetPatcher.Decompile {
+namespace Tomat.Differ.DotnetPatcher.Decompile {
     public class EmbeddedAssemblyResolver : IAssemblyResolver {
         private readonly PEFile baseModule;
         private readonly UniversalAssemblyResolver _resolver;

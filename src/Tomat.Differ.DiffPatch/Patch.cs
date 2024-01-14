@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public class Patch {
         public List<Diff> diffs;
         public int start1;

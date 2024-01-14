@@ -6,7 +6,7 @@ using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using ICSharpCode.Decompiler.Metadata;
 
-namespace DotnetPatcher.Utility {
+namespace Tomat.Differ.DotnetPatcher.Utility {
     public class AssemblyUtility {
         private class AttributeTypeProvider : ICustomAttributeTypeProvider<object> {
             public object GetPrimitiveType(PrimitiveTypeCode typeCode) => null;

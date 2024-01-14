@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public abstract class Differ {
         public const int DefaultContext = 3;
 

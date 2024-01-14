@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using ICSharpCode.Decompiler.Metadata;
 
-namespace DotnetPatcher.Utility {
+namespace Tomat.Differ.DotnetPatcher.Utility {
     public class ResourceUtility {
         public static void ExtractResource(string projectOutputDirectory, string name, Resource res, string projectDir) {
             var path = Path.Combine(projectOutputDirectory, projectDir, name);

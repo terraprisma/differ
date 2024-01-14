@@ -2,12 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using CodeChicken.DiffPatch;
-using DotnetPatcher.Utility;
-using DiffPatcher = CodeChicken.DiffPatch.Patcher;
-using DiffDiffer = CodeChicken.DiffPatch.Differ;
+using Tomat.Differ.DiffPatch;
+using Tomat.Differ.DotnetPatcher.Utility;
 
-namespace DotnetPatcher.Diff {
+namespace Tomat.Differ.DotnetPatcher.Diff {
     public class Differ {
         private static string[] DiffableFileExtensions = { ".cs", ".csproj", ".ico", ".resx", ".png", "App.config", ".json", ".targets", ".txt", ".bat", ".sh" };
 
@@ -65,7 +63,7 @@ namespace DotnetPatcher.Diff {
         }
 
         private void DiffFile(string relPath) {
-            var patchFile = DiffDiffer.DiffFiles(
+            var patchFile = DiffPatch.Differ.DiffFiles(
                 new LineMatchedDiffer(),
                 Path.Combine(SourcePath, relPath)
                     .Replace('\\', '/'),

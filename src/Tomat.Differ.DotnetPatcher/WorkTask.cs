@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotnetPatcher {
+namespace Tomat.Differ.DotnetPatcher {
     public class WorkTask {
         public delegate void Worker();
 

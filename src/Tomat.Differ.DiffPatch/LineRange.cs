@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public struct LineRange : IEquatable<LineRange> {
         public int start, end;
 

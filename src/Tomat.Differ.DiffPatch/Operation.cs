@@ -1,4 +1,4 @@
-﻿namespace CodeChicken.DiffPatch {
+﻿namespace Tomat.Differ.DiffPatch {
     public enum Operation {
         DELETE,
         INSERT,

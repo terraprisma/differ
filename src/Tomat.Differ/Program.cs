@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
-using DotnetPatcher.Decompile;
-using DotnetPatcher.Patch;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp.OutputVisitor;
+using Tomat.Differ.DotnetPatcher.Decompile;
+using Tomat.Differ.DotnetPatcher.Patch;
 using Tomat.Differ.Identity;
 using Tomat.Differ.Identity.Steam;
 using Tomat.Differ.Transformation;

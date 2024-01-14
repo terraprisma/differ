@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public class PatienceDiffer : Differ {
         public string LineModeString1 { get; private set; }
 

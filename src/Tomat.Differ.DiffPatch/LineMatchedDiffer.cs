@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public class LineMatchedDiffer : PatienceDiffer {
         public string[] WordModeLines1 { get; private set; }
 

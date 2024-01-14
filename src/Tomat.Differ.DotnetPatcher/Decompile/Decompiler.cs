@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection.PortableExecutable;
-using DotnetPatcher.Utility;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.CSharp.OutputVisitor;
 using ICSharpCode.Decompiler.Metadata;
+using Tomat.Differ.DotnetPatcher.Utility;
 
-namespace DotnetPatcher.Decompile {
+namespace Tomat.Differ.DotnetPatcher.Decompile {
     public class Decompiler {
         private readonly DecompilerSettings decompilerSettings;
         private DecompilerUtility.ExtendedProjectDecompiler projectDecompiler;

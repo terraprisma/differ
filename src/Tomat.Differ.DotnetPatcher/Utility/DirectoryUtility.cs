@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using ICSharpCode.Decompiler.Metadata;
 
-namespace DotnetPatcher.Utility {
+namespace Tomat.Differ.DotnetPatcher.Utility {
     public class DirectoryUtility {
         private static string[] nonSourceDirs = { "bin", "obj", ".vs" };
 

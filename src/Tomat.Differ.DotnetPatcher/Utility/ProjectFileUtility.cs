@@ -8,7 +8,7 @@ using System.Xml;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.Metadata;
 
-namespace DotnetPatcher.Utility {
+namespace Tomat.Differ.DotnetPatcher.Utility {
     public class ProjectFileUtility {
         public static WorkTask WriteProjectFile(PEFile module, string outputType, string projectOutputDirectory, IEnumerable<string> sources, IEnumerable<string> resources, Action<XmlTextWriter> writeSpecificConfig) {
             var name = AssemblyUtility.GetAssemblyTitle(module);

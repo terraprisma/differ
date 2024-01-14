@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public sealed class PatienceMatch {
         //working fields for matching
         private string chars1;

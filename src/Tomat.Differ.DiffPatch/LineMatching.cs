@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public static class LineMatching {
         public static IEnumerable<(LineRange, LineRange)> UnmatchedRanges(int[] matches, int len2) {
             int len1 = matches.Length;

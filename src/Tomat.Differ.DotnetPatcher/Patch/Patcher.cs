@@ -2,12 +2,11 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using CodeChicken.DiffPatch;
-using DotnetPatcher.Utility;
-using DiffPatcher = CodeChicken.DiffPatch.Patcher;
-using static CodeChicken.DiffPatch.Patcher;
+using Tomat.Differ.DiffPatch;
+using Tomat.Differ.DotnetPatcher.Utility;
+using static Tomat.Differ.DiffPatch.Patcher;
 
-namespace DotnetPatcher.Patch {
+namespace Tomat.Differ.DotnetPatcher.Patch {
     public class Patcher {
         private readonly ConcurrentBag<FilePatcher?> results = new ConcurrentBag<FilePatcher?>();
         private static readonly string RemovedFileList = "removed_files.list";

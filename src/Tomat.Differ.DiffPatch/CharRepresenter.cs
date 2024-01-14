@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public class CharRepresenter {
         private readonly List<string> charToLine = new List<string>();
         private readonly Dictionary<string, char> lineToChar = new Dictionary<string, char>();

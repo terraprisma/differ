@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public class FilePatcher {
         public string patchFilePath;
         public PatchFile patchFile;

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace CodeChicken.DiffPatch {
+namespace Tomat.Differ.DiffPatch {
     public class ReadOnlyListSlice<T> : IReadOnlyList<T> {
         private readonly IReadOnlyList<T> wrapped;
         private readonly LineRange range;

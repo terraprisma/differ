@@ -1,4 +1,4 @@
-﻿namespace CodeChicken.DiffPatch {
+﻿namespace Tomat.Differ.DiffPatch {
     public class Diff {
         public Operation op;
         public string text;

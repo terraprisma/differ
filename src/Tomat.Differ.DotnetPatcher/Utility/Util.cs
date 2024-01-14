@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace DotnetPatcher.Utility {
+namespace Tomat.Differ.DotnetPatcher.Utility {
     public class Util {
         public static bool IsCultureFile(string path) {
             if (!path.Contains('-'))
