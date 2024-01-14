@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepotDownloader", "DepotDow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ", "Tomat.Differ\Tomat.Differ.csproj", "{9BDF5FBE-14C7-4044-B5A3-41F800534C8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetPatcher", "DotnetPatcher\DotnetPatcher\DotnetPatcher.csproj", "{513461B8-EF49-441C-AD8C-73F3EF819F0C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffPatch", "DotnetPatcher\DiffPatch\DiffPatch.csproj", "{42945D84-1448-4642-82B7-5066FE4092C9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ.Build", "Tomat.Differ.Build\Tomat.Differ.Build.csproj", "{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ.DiffPatch", "Tomat.Differ.DiffPatch\Tomat.Differ.DiffPatch.csproj", "{19D2F548-6D92-46FE-8138-0C362AB6D2EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ.DotnetPatcher", "Tomat.Differ.DotnetPatcher\Tomat.Differ.DotnetPatcher.csproj", "{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,17 +30,17 @@ Global
 		{9BDF5FBE-14C7-4044-B5A3-41F800534C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BDF5FBE-14C7-4044-B5A3-41F800534C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BDF5FBE-14C7-4044-B5A3-41F800534C8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{513461B8-EF49-441C-AD8C-73F3EF819F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{513461B8-EF49-441C-AD8C-73F3EF819F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{513461B8-EF49-441C-AD8C-73F3EF819F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{513461B8-EF49-441C-AD8C-73F3EF819F0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42945D84-1448-4642-82B7-5066FE4092C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42945D84-1448-4642-82B7-5066FE4092C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42945D84-1448-4642-82B7-5066FE4092C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42945D84-1448-4642-82B7-5066FE4092C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
