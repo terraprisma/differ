@@ -31,6 +31,7 @@ switch (task) {
 
     // Decompiles all depots.
     case decompile_depots:
+        differ.DecompileDepots();
         break;
 
     // Diffs all depots.

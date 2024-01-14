@@ -1,14 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using ICSharpCode.Decompiler;
+using ICSharpCode.Decompiler.CSharp.OutputVisitor;
+using Tomat.Differ.DotnetPatcher.Decompile;
 using Tomat.Differ.Nodes;
+using Tomat.Differ.Transformation;
+using Tomat.Differ.Transformation.Transformers;
 
 [assembly: InternalsVisibleTo("Tomat.Differ.Build")]
 
 namespace Tomat.Differ;
 
 public sealed class PatchSetHandler {
+    private const string decompilation_dir = "decompiled";
+    private const string patches_dir = "patches";
+    private const string cloned_dir = "cloned";
+    private static readonly string[] decompiled_libraries = { "ReLogic", "RailSDK.Net", "SteelSeriesEngineWrapper" };
+
     public PatchSet PatchSet { get; }
 
     public PatchSetHandler(PatchSet patchSet) {
@@ -32,29 +43,43 @@ public sealed class PatchSetHandler {
         }
     }
 
-    private static void DownloadManifest(string username, string password, int appId, int depotId) {
-        var dir = Path.Combine("downloads", appId.ToString(), depotId.ToString());
+    public void DecompileDepots() {
+        foreach (var node in GetNodesOfType<DepotNode>()) {
+            var dir = Path.Combine(decompilation_dir, node.Name);
+            Console.WriteLine($"Decompiling {node.Name}");
+            Console.WriteLine("Transforming assemblies");
 
-        if (Directory.Exists(dir))
-            Directory.Delete(dir, true);
+            if (Directory.Exists(dir))
+                Directory.Delete(dir, true);
 
-        DepotDownloader.Program.Main(
-            new[] {
-                "-app",
-                appId.ToString(),
-                "-depot",
-                depotId.ToString(),
-                "-filelist",
-                "filelist.txt",
-                "-username",
-                username,
-                "-password",
-                password,
-                "-dir",
+            Directory.CreateDirectory(dir);
+
+            var depotDir = Path.Combine("downloads", node.AppId.ToString(), node.DepotId.ToString());
+            if (!Directory.Exists(depotDir))
+                throw new Exception($"Depot {node.Name} was not downloaded!");
+
+            var clonedDir = Path.Combine(cloned_dir, node.Name);
+            if (Directory.Exists(clonedDir))
+                Directory.Delete(clonedDir, true);
+
+            CopyRecursively(depotDir, clonedDir);
+
+            var exePath = Path.Combine(clonedDir, node.PathToExecutable);
+
+            var context = AssemblyTransformer.GetAssemblyContextWithUniversalAssemblyResolverFromPath(exePath);
+            AssemblyTransformer.TransformAssembly(context, new DecompilerParityTransformer());
+
+            var decompiler = new Decompiler(
+                exePath,
                 dir,
-                //"-remember-password",
-            }
-        );
+                new DecompilerSettings {
+                    CSharpFormattingOptions = FormattingOptionsFactory.CreateKRStyle(),
+                    Ranges = false,
+                }
+            );
+
+            decompiler.Decompile(decompiled_libraries);
+        }
     }
 
     public IEnumerable<DiffNode> GetNodeWithName(string name) {
@@ -66,56 +91,6 @@ public sealed class PatchSetHandler {
     }
 
     private void DecompileAndDiffDepotNodes(DiffNode node, DiffNode? parent = null) {
-        //if (node is not DepotDiffNode depotNode) {
-        //    Console.WriteLine($"Skipping {node.WorkspaceName} since it isn't a depot node...");
-        //    foreach (var child in node.Children)
-        //        DecompileAndDiffDepotNodes(child, node);
-        //
-        //    return;
-        //}
-        //
-        //const string decompilation_dir = "decompiled";
-        //const string patches_dir = "patches";
-        //var dirName = Path.Combine(decompilation_dir, node.WorkspaceName);
-        //
-        //if (Environment.GetEnvironmentVariable("SKIP_DECOMPILATION") != "1") {
-        //    Console.WriteLine($"Decompiling {node.WorkspaceName}...");
-        //
-        //    Console.WriteLine("Transforming assemblies...");
-        //
-        //    if (Directory.Exists(dirName))
-        //        Directory.Delete(dirName, true);
-        //
-        //    Directory.CreateDirectory(dirName);
-        //
-        //    var depotDir = Path.Combine("downloads", depotNode.DepotName);
-        //    if (!Directory.Exists(depotDir))
-        //        throw new Exception($"Depot {depotNode.DepotName} was not downloaded!");
-        //
-        //    var clonedDir = Path.Combine("cloned", depotNode.WorkspaceName);
-        //    if (Directory.Exists(clonedDir))
-        //        Directory.Delete(clonedDir, true);
-        //
-        //    CopyRecursively(depotDir, clonedDir);
-        //    var exePath = Path.Combine(clonedDir, depotNode.RelativePathToExecutable);
-        //
-        //    var context = AssemblyTransformer.GetAssemblyContextWithUniversalAssemblyResolverFromPath(exePath);
-        //    AssemblyTransformer.TransformAssembly(context, new DecompilerParityTransformer());
-        //
-        //    // var formatting = FormattingOptionsFactory.CreateKRStyle();
-        //    // formatting.IndentationString = "    ";
-        //    var decompiler = new Decompiler(
-        //        exePath,
-        //        dirName,
-        //        new DecompilerSettings {
-        //            CSharpFormattingOptions = FormattingOptionsFactory.CreateKRStyle(),
-        //            Ranges = false,
-        //        }
-        //    );
-        //
-        //    decompiler.Decompile(new[] { "ReLogic", /*"LogitechLedEnginesWrapper",*/ "RailSDK.Net", "SteelSeriesEngineWrapper" });
-        //}
-        //
         //foreach (var child in node.Children)
         //    DecompileAndDiffDepotNodes(child, node);
         //
@@ -221,5 +196,30 @@ public sealed class PatchSetHandler {
 
         foreach (var file in Directory.GetFiles(fromDir, "*", SearchOption.AllDirectories))
             File.Copy(file, file.Replace(fromDir, toDir), true);
+    }
+
+    private static void DownloadManifest(string username, string password, int appId, int depotId) {
+        var dir = Path.Combine("downloads", appId.ToString(), depotId.ToString());
+
+        if (Directory.Exists(dir))
+            Directory.Delete(dir, true);
+
+        DepotDownloader.Program.Main(
+            new[] {
+                "-app",
+                appId.ToString(),
+                "-depot",
+                depotId.ToString(),
+                "-filelist",
+                "filelist.txt",
+                "-username",
+                username,
+                "-password",
+                password,
+                "-dir",
+                dir,
+                //"-remember-password",
+            }
+        );
     }
 }
