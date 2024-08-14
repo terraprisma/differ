@@ -84,7 +84,7 @@ public sealed class PatchSetHandler {
                 CSharpFormattingOptions = FormattingOptionsFactory.CreateKRStyle(),
                 Ranges = false,
             };
-            ProjectDecompiler.Decompile(exePath, dir, decompilerSettings, decompiled_libraries);
+            ProjectDecompiler.Decompile(exePath, dir, decompilerSettings, decompiled_libraries, ["Terraria.Libraries"]);
         }
     }
 
