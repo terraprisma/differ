@@ -1,3 +1,6 @@
 [submodule "src/DepotDownloader"]
 	path = src/DepotDownloader
 	url = https://github.com/terraprisma/DepotDownloader
+[submodule "src/cdc"]
+	path = src/cdc
+	url = https://github.com/reaganism/cdc.git

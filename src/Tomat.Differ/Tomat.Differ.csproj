@@ -12,9 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\cdc\src\fbi\src\Reaganism.FBI\Reaganism.FBI.csproj"/>
+        <ProjectReference Include="..\cdc\src\Reaganism.CDC\Reaganism.CDC.csproj"/>
         <ProjectReference Include="..\DepotDownloader\DepotDownloader\DepotDownloader.csproj"/>
-        <ProjectReference Include="..\Tomat.Differ.DiffPatch\Tomat.Differ.DiffPatch.csproj"/>
-        <ProjectReference Include="..\Tomat.Differ.DotnetPatcher\Tomat.Differ.DotnetPatcher.csproj"/>
     </ItemGroup>
 
 </Project>

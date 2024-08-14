@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ", "Tomat.Diffe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ.Build", "Tomat.Differ.Build\Tomat.Differ.Build.csproj", "{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ.DiffPatch", "Tomat.Differ.DiffPatch\Tomat.Differ.DiffPatch.csproj", "{19D2F548-6D92-46FE-8138-0C362AB6D2EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaganism.CDC", "cdc\src\Reaganism.CDC\Reaganism.CDC.csproj", "{2C5BA9FB-594F-40DD-B15E-34C2AB0441C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomat.Differ.DotnetPatcher", "Tomat.Differ.DotnetPatcher\Tomat.Differ.DotnetPatcher.csproj", "{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaganism.FBI", "cdc\src\fbi\src\Reaganism.FBI\Reaganism.FBI.csproj", "{DDEE117F-2AFC-4198-B30B-BF6DE1E22815}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,13 +34,13 @@ Global
 		{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD919552-93BD-4C2C-B8D1-80C8857BCB5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19D2F548-6D92-46FE-8138-0C362AB6D2EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD3DA195-A1A9-4760-93A4-71AAEDC878D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C5BA9FB-594F-40DD-B15E-34C2AB0441C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5BA9FB-594F-40DD-B15E-34C2AB0441C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5BA9FB-594F-40DD-B15E-34C2AB0441C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5BA9FB-594F-40DD-B15E-34C2AB0441C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDEE117F-2AFC-4198-B30B-BF6DE1E22815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDEE117F-2AFC-4198-B30B-BF6DE1E22815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDEE117F-2AFC-4198-B30B-BF6DE1E22815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDEE117F-2AFC-4198-B30B-BF6DE1E22815}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

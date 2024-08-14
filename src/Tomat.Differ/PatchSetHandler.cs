@@ -4,8 +4,12 @@ using System.IO;
 using System.Linq;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.CSharp.OutputVisitor;
-using Tomat.Differ.DotnetPatcher.Decompile;
-using Tomat.Differ.DotnetPatcher.Patch;
+
+using Reaganism.CDC.Decompilation;
+using Reaganism.CDC.Diffing;
+using Reaganism.CDC.Patching;
+using Reaganism.CDC.Utilities.Extensions;
+
 using Tomat.Differ.Nodes;
 using Tomat.Differ.Transformation;
 using Tomat.Differ.Transformation.Transformers;
@@ -75,16 +79,12 @@ public sealed class PatchSetHandler {
             var context = AssemblyTransformer.GetAssemblyContextWithUniversalAssemblyResolverFromPath(exePath);
             AssemblyTransformer.TransformAssembly(context, new DecompilerParityTransformer());
 
-            var decompiler = new Decompiler(
-                exePath,
-                dir,
-                new DecompilerSettings {
-                    CSharpFormattingOptions = FormattingOptionsFactory.CreateKRStyle(),
-                    Ranges = false,
-                }
-            );
-
-            decompiler.Decompile(decompiled_libraries);
+            var decompilerSettings = new DecompilerSettings
+            {
+                CSharpFormattingOptions = FormattingOptionsFactory.CreateKRStyle(),
+                Ranges = false,
+            };
+            ProjectDecompiler.Decompile(exePath, dir, decompilerSettings, decompiled_libraries);
         }
     }
 
@@ -107,8 +107,10 @@ public sealed class PatchSetHandler {
 
             Directory.CreateDirectory(node.PatchDir);
 
-            var differ = new DotnetPatcher.Diff.Differ(Path.Combine(decompilation_dir, parent.Name), node.PatchDir, Path.Combine(decompilation_dir, node.Name));
-            differ.Diff();
+            var differSettings = new DifferSettings(Path.Combine(decompilation_dir, parent.Name), Path.Combine(decompilation_dir, node.Name), node.PatchDir)
+                                .IgnoreCommonDirectories()
+                                .HandleCommonFileTypes();
+            ProjectDiffer.Diff(differSettings);
         }
     }
 
@@ -132,8 +134,8 @@ public sealed class PatchSetHandler {
             if (Directory.Exists(Path.Combine(decompilation_dir, node.Name)))
                 Directory.Delete(Path.Combine(decompilation_dir, node.Name), true);
 
-            var patcher = new Patcher(Path.Combine(decompilation_dir, parent.Name), node.PatchDir, Path.Combine(decompilation_dir, node.Name));
-            patcher.Patch();
+            var patcherSettings = new PatcherSettings(Path.Combine(decompilation_dir, parent.Name), Path.Combine(decompilation_dir, node.Name), node.PatchDir);
+            ProjectPatcher.Patch(patcherSettings);
         }
     }
 
