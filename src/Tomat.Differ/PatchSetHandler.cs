@@ -84,7 +84,7 @@ public sealed class PatchSetHandler {
                 CSharpFormattingOptions = FormattingOptionsFactory.CreateKRStyle(),
                 Ranges = false,
             };
-            ProjectDecompiler.Decompile(exePath, dir, decompilerSettings, decompiled_libraries, ["Libraries"]);
+            ProjectDecompiler.Decompile(exePath, dir, decompilerSettings, decompiled_libraries, ["Microsoft.Xna.Framework.RuntimeProfile", "Libraries"]);
         }
     }
 
